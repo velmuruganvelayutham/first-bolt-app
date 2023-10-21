@@ -9,6 +9,7 @@ const app = new App({
 // Listens to incoming messages that contain "hello"
 app.message('hello', async ({ message, say }) => {
   // say() sends a message to the channel where the event was triggered
+  console.log('⚡️ Hello World', message);
   await say(`Hey there <@${message.user}>!`);
 });
 
