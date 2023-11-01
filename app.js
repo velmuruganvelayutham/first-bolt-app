@@ -9,8 +9,8 @@ const app = new App({
 app.action('button_click', async ({ body, ack, say }) => {
   // Acknowledge the action
   console.log('button_clicked');
-  await new Promise(resolve => setTimeout(resolve, 3000));
   await ack();
+  await new Promise(resolve => setTimeout(resolve, 3000));
   console.log('waited for 3 seconds');
   await say(`<@${body.user.id}> clicked the button`);
 });
