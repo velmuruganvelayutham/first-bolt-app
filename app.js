@@ -43,10 +43,10 @@ app.event('app_home_opened', async ({ client, context, event, body }) => {
             options: [{
               "text": {
                 "type": "plain_text",
-                "text": "On",
+                "text": "ON/OFF",
                 "emoji": true
               },
-              "value": "value-0"
+              "value": "ON"
             }],
             action_id: "user-home-checkboxes-action",
           }
