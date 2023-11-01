@@ -12,6 +12,52 @@ app.action('button_click', async ({ body, ack, say }) => {
   await say(`<@${body.user.id}> clicked the button`);
 });
 
+app.event('app_home_opened', async ({ client, context, event, body }) => {
+  let user_id = body.event ? body.event.user : body.user.id;
+  console.log(`app_home_opened <=> Context is ${JSON.stringify(context)}`);
+  console.log(`app_home_opened <=> Event is ${JSON.stringify(event)}`);
+  console.log(`app_home_opened <=> Body is ${JSON.stringify(body)}`);
+  let homeBlocks = [
+    {
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `*Turn your availability On/Off to be put on Queue*`
+      }
+    },
+    {
+      type: "divider"
+    },
+    {
+      type: "actions",
+      block_id: "checkbox_block",
+      elements: [
+        {
+          type: "checkboxes",
+          options: [{
+            "text": {
+              "type": "plain_text",
+              "text": "On",
+              "emoji": true
+            },
+            "value": "value-0"
+          }],
+          action_id: "user-home-checkboxes-action",
+        }
+      ]
+    }
+  ];
+
+  await client.views.publish({
+    token: context.botToken,
+    user_id: user_id,
+    view: homeBlocks,
+  });
+  console.log(`app_home_opened <=> view published end ${JSON.stringify(homeBlocks)}`);
+
+});
+
+
 // Listens to incoming messages that contain "hello"
 app.message('hello', async ({ message, say }) => {
   // say() sends a message to the channel where the event was triggered
