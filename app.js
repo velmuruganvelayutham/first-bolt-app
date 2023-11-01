@@ -48,6 +48,14 @@ app.event('app_home_opened', async ({ client, context, event, body }) => {
               },
               "value": "ON"
             }],
+            initial_options: [{
+              "text": {
+                "type": "plain_text",
+                "text": "ON/OFF",
+                "emoji": true
+              },
+              "value": "ON"
+            }],
             action_id: "user-home-checkboxes-action",
           }
         ]
