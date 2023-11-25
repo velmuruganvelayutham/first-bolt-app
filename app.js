@@ -61,7 +61,10 @@ app.action('available_pxms', async ({ body, ack, client }) => {
       }
     ]
   };
-  client.views.open(pxmBlocks);
+  await client.views.open({
+    trigger_id: body.trigger_id,
+    view: pxmBlocks,
+  });
 });
 
 app.event('app_home_opened', async ({ client, context, event, body }) => {
