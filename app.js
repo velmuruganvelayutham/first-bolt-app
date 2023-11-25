@@ -17,7 +17,7 @@ app.action('available_pxms', async ({ body, ack, say }) => {
   // Acknowledge the action
   console.log('available_pxms');
   await ack();
-  await say(`<@${body.user.id}> clicked the available PXM button`);
+  await say(`clicked the available PXM button`);
 });
 
 app.event('app_home_opened', async ({ client, context, event, body }) => {
