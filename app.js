@@ -10,9 +10,14 @@ app.action('button_click', async ({ body, ack, say }) => {
   // Acknowledge the action
   console.log('button_clicked');
   await ack();
-  await new Promise(resolve => setTimeout(resolve, 3000));
-  console.log('waited for 3 seconds');
   await say(`<@${body.user.id}> clicked the button`);
+});
+
+app.action('available_pxms', async ({ body, ack, say }) => {
+  // Acknowledge the action
+  console.log('available_pxms');
+  await ack();
+  await say(`<@${body.user.id}> clicked the available PXM button`);
 });
 
 app.event('app_home_opened', async ({ client, context, event, body }) => {
@@ -59,7 +64,25 @@ app.event('app_home_opened', async ({ client, context, event, body }) => {
             action_id: "user-home-checkboxes-action",
           }
         ]
-      }
+      },
+      {
+				type: "divider"
+			},
+			{
+				type: "actions",
+				elements: [
+					{
+						type: "button",
+						text: {
+							type: "plain_text",
+							text: "Available_PXMs",
+							emoji: true,
+						},
+						value: "available_pxms",
+						action_id: "available_pxms",
+					},
+				],
+			},
     ]
   };
 
