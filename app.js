@@ -55,7 +55,7 @@ app.action('available_pxms', async ({ body, ack, client }) => {
           },
           {
             "type": "mrkdwn",
-            "text": "*Allotted Channels:*\nc2c-67676\nc2c-76786\nc2c-76786\nc2c-76786\nc2c-76786\nc2c-76786\nc2c-76786"
+            "text": "*Allotted Channels:*\n<https://www.example.com|c2c-7676867876>"
           }
         ]
       }
