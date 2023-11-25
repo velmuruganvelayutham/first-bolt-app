@@ -13,11 +13,55 @@ app.action('button_click', async ({ body, ack, say }) => {
   await say(`<@${body.user.id}> clicked the button`);
 });
 
-app.action('available_pxms', async ({ body, ack, say }) => {
+app.action('available_pxms', async ({ body, ack, client }) => {
   // Acknowledge the action
   console.log('available_pxms');
   await ack();
-  return true;
+  let pxmBlocks = {
+    "type": "modal",
+    "title": {
+      "type": "plain_text",
+      "text": "PXMs",
+      "emoji": true
+    },
+    "blocks": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Velmurugan Velayutham",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "fields": [
+          {
+            "type": "mrkdwn",
+            "text": "*Available:*\nYes"
+          },
+          {
+            "type": "mrkdwn",
+            "text": "*Allotted:*\nYes"
+          }
+        ]
+      },
+      {
+        "type": "section",
+        "fields": [
+          {
+            "type": "mrkdwn",
+            "text": "*Avl.Duration:*\n 60 Minutes"
+          },
+          {
+            "type": "mrkdwn",
+            "text": "*Allotted Channels:*\nc2c-67676\nc2c-76786\nc2c-76786\nc2c-76786\nc2c-76786\nc2c-76786\nc2c-76786"
+          }
+        ]
+      }
+    ]
+  };
+  client.views.open(pxmBlocks);
 });
 
 app.event('app_home_opened', async ({ client, context, event, body }) => {
@@ -66,23 +110,23 @@ app.event('app_home_opened', async ({ client, context, event, body }) => {
         ]
       },
       {
-				type: "divider"
-			},
-			{
-				type: "actions",
-				elements: [
-					{
-						type: "button",
-						text: {
-							type: "plain_text",
-							text: "Available_PXMs",
-							emoji: true,
-						},
-						value: "available_pxms",
-						action_id: "available_pxms",
-					},
-				],
-			},
+        type: "divider"
+      },
+      {
+        type: "actions",
+        elements: [
+          {
+            type: "button",
+            text: {
+              type: "plain_text",
+              text: "Available_PXMs",
+              emoji: true,
+            },
+            value: "available_pxms",
+            action_id: "available_pxms",
+          },
+        ],
+      },
     ]
   };
 
