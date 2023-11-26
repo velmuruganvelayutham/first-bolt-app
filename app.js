@@ -18,6 +18,8 @@ app.action('available_pxms', async ({ body, ack, client }) => {
   // Acknowledge the action
   console.log('available_pxms');
   await ack();
+  const result = await services.fetchConversationsHistory();
+  console.log(`Result: ${JSON.stringify(result)}`);
   let pxmBlocks = {
     "type": "modal",
     "title": {
@@ -144,8 +146,7 @@ app.message('hello', async ({ message, say }) => {
 
 
 /*
-
 userid to username mapping 
 show avaialble user at the top
-
+/rest API Endpoints with UI rendering for the conversations - messages.
 */

@@ -1,5 +1,6 @@
 "use strict";
 const moment = require("moment");
+const { WebClient } = require('@slack/web-api');
 module.exports = {
     parsePXMQueueValues: () => {
 
@@ -148,5 +149,28 @@ module.exports = {
             console.log(`${JSON.stringify(convertedPxmQueue)}`);
         });
         return convertedPxmQueues;
+    },
+
+    fetchConversationsHistory: async () => {
+        // Store conversation history
+        let conversationHistory;
+        // ID of channel you watch to fetch the history for
+        let channelId = "C3XQUTUN5";
+
+        try {
+            // Call the conversations.history method using WebClient
+            const client = new WebClient();
+            const result = await client.conversations.history({
+                channel: channelId
+            });
+            conversationHistory = result.messages;
+            // Print results
+            console.log(conversationHistory.length + " messages found in " + channelId);
+            console.log(`history: ${JSON.stringify(conversationHistory)}`);
+        }
+        catch (error) {
+            console.error(error);
+        }
+        return conversationHistory;
     }
 }
