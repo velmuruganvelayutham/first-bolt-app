@@ -25,8 +25,9 @@ app.action('available_pxms', async ({ body, ack, client }) => {
       "text": "PXMs",
       "emoji": true
     },
-    "blocks": [[], ...blocks.model(services.parsePXMQueueValues())]
+    "blocks": blocks.model(services.parsePXMQueueValues())
   };
+  console.log(`pxmBlocks: ${pxmBlocks}`);
   await client.views.open({
     trigger_id: body.trigger_id,
     view: pxmBlocks,
