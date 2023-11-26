@@ -1,5 +1,6 @@
 const { App } = require('@slack/bolt');
-
+const blocks = require('./blocks');
+const services = require('./parsePXMQueues');
 // Initializes your app with your bot token and signing secret
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -24,42 +25,7 @@ app.action('available_pxms', async ({ body, ack, client }) => {
       "text": "PXMs",
       "emoji": true
     },
-    "blocks": [
-      {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Velmurugan Velayutham",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "fields": [
-          {
-            "type": "mrkdwn",
-            "text": "*Available:*\nYes"
-          },
-          {
-            "type": "mrkdwn",
-            "text": "*Allotted:*\nYes"
-          }
-        ]
-      },
-      {
-        "type": "section",
-        "fields": [
-          {
-            "type": "mrkdwn",
-            "text": "*Avl.Duration:*\n 60 Minutes"
-          },
-          {
-            "type": "mrkdwn",
-            "text": "*Allotted Channels:*\n<https://www.example.com|c2c-7676867876>"
-          }
-        ]
-      }
-    ]
+    "blocks": [[], ...blocks.model(services.parsePXMQueueValues())]
   };
   await client.views.open({
     trigger_id: body.trigger_id,
