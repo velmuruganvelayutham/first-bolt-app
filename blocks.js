@@ -10,7 +10,7 @@ module.exports = {
             let allottedChannels = element.allottedChannels;
             let formattedChannelsStr = "";
             allottedChannels.forEach(channel => {
-                formattedChannelsStr += `<${url}/${channel.channel}>|${channel.channel}(${channel.timeSpent})\n`;
+                formattedChannelsStr += `<${url}/${channel.channel}|${channel.channel} - (${channel.timeSpent} Minutes)>\n`;
             });
 
             pxmQueuesBlocks.push({
@@ -46,7 +46,11 @@ module.exports = {
                             "text": `*Allotted Channels:*\n${formattedChannelsStr}`
                         }
                     ]
-                });
+                },
+                {
+                    "type": "divider"
+                }
+            );
         });
         console.log(`pxmQueuesBlocks:${JSON.stringify(pxmQueuesBlocks)}`)
         return pxmQueuesBlocks;

@@ -27,7 +27,7 @@ app.action('available_pxms', async ({ body, ack, client }) => {
     },
     "blocks": blocks.model(services.parsePXMQueueValues())
   };
-  console.log(`pxmBlocks: ${pxmBlocks}`);
+  console.log(`pxmBlocks: ${JSON.stringify(pxmBlocks)}`);
   await client.views.open({
     trigger_id: body.trigger_id,
     view: pxmBlocks,
@@ -141,3 +141,11 @@ app.message('hello', async ({ message, say }) => {
 
   console.log('⚡️ Bolt app is running!');
 })();
+
+
+/*
+
+userid to username mapping 
+show avaialble user at the top
+
+*/
