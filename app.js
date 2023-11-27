@@ -84,10 +84,10 @@ app.action('conversations_datepicker_action_id', async ({ body, ack, client }) =
         ]
       }
     });
-    logger.info(result);
+    console.log(`result:${result}`);
   }
   catch (error) {
-    logger.error(error);
+    console.log(error);
   }
 });
 
