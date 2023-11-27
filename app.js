@@ -48,11 +48,19 @@ app.action('conversations_action_id', async ({ body, ack, client }) => {
 app.action('conversations_datepicker_action_id', async ({ body, ack, client }) => {
   // Acknowledge the action
   console.log(`conversations_datepicker_action_id:${JSON.stringify(body)}`);
+  let selectedDate = "";
   await ack();
   try {
     if (body.type !== 'block_actions' || !body.view) {
       return;
     }
+
+    body.actions.forEach((action) => {
+      if (action.type === 'datepicker' && action.action_id === 'conversations_datepicker_action_id') {
+        selectedDate = action.selected_date;
+      }
+    });
+    console.log(`selectedDate: ${selectedDate}`);
     // Call views.update with the built-in client
     const result = await client.views.update({
       // Pass the view_id
