@@ -38,8 +38,7 @@ app.action('available_pxms', async ({ body, ack, client }) => {
 
 app.action('conversations_action_id', async ({ body, ack, client }) => {
   // Acknowledge the action
-  console.log('conversations_action_id');
-  await ack();
+  ack();
   await client.views.open({
     trigger_id: body.trigger_id,
     view: blocks.conversations(),
@@ -48,12 +47,48 @@ app.action('conversations_action_id', async ({ body, ack, client }) => {
 
 app.action('conversations_datepicker_action_id', async ({ body, ack, client }) => {
   // Acknowledge the action
-  console.log('conversations_datepicker_action_id');
+  console.log(`conversations_datepicker_action_id:${body}`);
   await ack();
-  await client.views.open({
-    trigger_id: body.trigger_id,
-    view: blocks.conversations(),
-  });
+  try {
+    if (body.type !== 'block_actions' || !body.view) {
+      return;
+    }
+    // Call views.update with the built-in client
+    const result = await client.views.update({
+      // Pass the view_id
+      view_id: body.view.id,
+      // Pass the current hash to avoid race conditions
+      hash: body.view.hash,
+      // View payload with updated blocks
+      view: {
+        type: 'modal',
+        // View identifier
+        callback_id: 'view_1',
+        title: {
+          type: 'plain_text',
+          text: 'Updated modal'
+        },
+        blocks: [
+          {
+            type: 'section',
+            text: {
+              type: 'plain_text',
+              text: 'You updated the modal!'
+            }
+          },
+          {
+            type: 'image',
+            image_url: 'https://media.giphy.com/media/SVZGEcYt7brkFUyU90/giphy.gif',
+            alt_text: 'Yay! The modal was updated'
+          }
+        ]
+      }
+    });
+    logger.info(result);
+  }
+  catch (error) {
+    logger.error(error);
+  }
 });
 
 app.event('app_home_opened', async ({ client, context, event, body }) => {
@@ -69,7 +104,7 @@ app.event('app_home_opened', async ({ client, context, event, body }) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `*Turn your availability On/Off to be put on Queue*`
+          text: `* Turn your availability On / Off to be put on Queue * `
         }
       },
       {
@@ -156,7 +191,7 @@ app.message('hello', async ({ message, say }) => {
         "type": "section",
         "text": {
           "type": "mrkdwn",
-          "text": `Hey there <@${message.user}>!`
+          "text": `Hey there < @${message.user} > !`
         },
         "accessory": {
           "type": "button",
@@ -168,7 +203,7 @@ app.message('hello', async ({ message, say }) => {
         }
       }
     ],
-    text: `Hey there <@${message.user}>!`
+    text: `Hey there < @${message.user} > !`
   });
 });
 
