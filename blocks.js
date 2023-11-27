@@ -59,12 +59,8 @@ module.exports = {
         const conversationBlocks = {
             "title": {
                 "type": "plain_text",
-                "text": "PXMs",
+                "text": "Conversations",
                 "emoji": true
-            },
-            "submit": {
-                "type": "plain_text",
-                "text": "Submit"
             },
             "type": "modal",
             "blocks": [

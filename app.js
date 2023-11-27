@@ -47,7 +47,7 @@ app.action('conversations_action_id', async ({ body, ack, client }) => {
 
 app.action('conversations_datepicker_action_id', async ({ body, ack, client }) => {
   // Acknowledge the action
-  console.log(`conversations_datepicker_action_id:${body}`);
+  console.log(`conversations_datepicker_action_id:${JSON.stringify(body)}`);
   await ack();
   try {
     if (body.type !== 'block_actions' || !body.view) {
@@ -84,7 +84,7 @@ app.action('conversations_datepicker_action_id', async ({ body, ack, client }) =
         ]
       }
     });
-    console.log(`result:${result}`);
+    console.log(`result:${JSON.stringify(result)}`);
   }
   catch (error) {
     console.log(error);
