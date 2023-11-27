@@ -55,4 +55,52 @@ module.exports = {
         console.log(`pxmQueuesBlocks:${JSON.stringify(pxmQueuesBlocks)}`)
         return pxmQueuesBlocks;
     },
+    conversations: () => {
+        const conversationBlocks = {
+            "title": {
+                "type": "plain_text",
+                "text": "PXMs",
+                "emoji": true
+            },
+            "submit": {
+                "type": "plain_text",
+                "text": "Submit"
+            },
+            "type": "modal",
+            "blocks": [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Pick a date to view the channels created"
+                    },
+                    "accessory": {
+                        "type": "datepicker",
+                        "initial_date": "1990-04-28",
+                        "placeholder": {
+                            "type": "plain_text",
+                            "text": "Select a date",
+                            "emoji": true
+                        },
+                        "action_id": "conversations_datepicker_action_id"
+                    }
+                },
+                {
+                    "type": "section",
+                    "fields": [
+                        {
+                            "type": "mrkdwn",
+                            "text": "*Total channel created:*\n10"
+                        },
+                        {
+                            "type": "mrkdwn",
+                            "text": "*Created Channels:*\nc2c-8778787"
+                        }
+                    ]
+                }
+            ]
+        }
+
+        return conversationBlocks;
+    },
 }

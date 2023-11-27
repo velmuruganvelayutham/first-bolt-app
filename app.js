@@ -18,8 +18,8 @@ app.action('available_pxms', async ({ body, ack, client }) => {
   // Acknowledge the action
   console.log('available_pxms');
   await ack();
-  const result = await services.fetchConversationsHistory();
-  console.log(`Result: ${JSON.stringify(result)}`);
+  // const result = await services.fetchConversationsHistory();
+  // console.log(`Result: ${JSON.stringify(result)}`);
   let pxmBlocks = {
     "type": "modal",
     "title": {
@@ -33,6 +33,26 @@ app.action('available_pxms', async ({ body, ack, client }) => {
   await client.views.open({
     trigger_id: body.trigger_id,
     view: pxmBlocks,
+  });
+});
+
+app.action('conversations_action_id', async ({ body, ack, client }) => {
+  // Acknowledge the action
+  console.log('conversations_action_id');
+  await ack();
+  await client.views.open({
+    trigger_id: body.trigger_id,
+    view: blocks.conversations(),
+  });
+});
+
+app.action('conversations_datepicker_action_id', async ({ body, ack, client }) => {
+  // Acknowledge the action
+  console.log('conversations_datepicker_action_id');
+  await ack();
+  await client.views.open({
+    trigger_id: body.trigger_id,
+    view: blocks.conversations(),
   });
 });
 
@@ -96,6 +116,21 @@ app.event('app_home_opened', async ({ client, context, event, body }) => {
             },
             value: "available_pxms",
             action_id: "available_pxms",
+          },
+        ],
+      },
+      {
+        type: "actions",
+        elements: [
+          {
+            type: "button",
+            text: {
+              type: "plain_text",
+              text: "Conversations",
+              emoji: true,
+            },
+            value: "Conversations",
+            action_id: "conversations_action_id",
           },
         ],
       },
